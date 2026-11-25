@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz cumpleaños Sam 💗</title>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    .floating-text {
+      position: absolute;
+      color: #ff99bb;
+      font-size: 22px;
+      font-weight: bold;
+      pointer-events: none;
+      animation: floatUp 2s ease-out forwards;
+      text-shadow: 0 0 8px white;
+      white-space: nowrap;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-80px) scale(1.3);
+      }
+    }
+
+    #musicButton {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 22px;
+      border: none;
+      border-radius: 25px;
+      background: #ff6699;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    #musicButton:hover {
+      background: #ff3380;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="canvas"></canvas>
+
+  <audio id="music" loop>
+    <source src="musica.mpeg" type="audio/mpeg">
+  </audio>
+
+  <button id="musicButton">♫ Activar música</button>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const phrase = "Feliz cumpleaños Sam";
+    const fontSize = 20;
+    const columnWidth = 190;
+
+    let columns = Math.ceil(width / columnWidth);
+
+    let drops = Array.from(
+      { length: columns },
+      () => Math.random() * -height / fontSize
+    );
+
+    function draw() {
+
+      ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+      ctx.fillRect(0, 0, width, height);
+
+      const gradient = ctx.createLinearGradient(0, 0, width, height);
+
+      gradient.addColorStop(0, "#ff4d6d");
+      gradient.addColorStop(0.5, "#ff99bb");
+      gradient.addColorStop(1, "#ff1a66");
+
+      ctx.fillStyle = gradient;
+      ctx.font = "bold " + fontSize + "px 'Segoe UI', Arial";
+
+      for (let i = 0; i < drops.length; i++) {
+
+        ctx.fillText(
+          phrase,
+          i * columnWidth,
+          drops[i] * fontSize
+        );
+
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i] += 0.30;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    window.addEventListener('resize', () => {
+
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      canvas.width = width;
+      canvas.height = height;
+
+      columns = Math.ceil(width / columnWidth);
+
+      drops = Array.from(
+        { length: columns },
+        () => Math.random() * -height / fontSize
+      );
+    });
+
+    document.addEventListener('click', (e) => {
+
+      if (e.target.id === 'musicButton') return;
+
+      const text = document.createElement('div');
+
+      text.className = 'floating-text';
+      text.innerText = '¡Feliz cumpleaños Sam! 💗';
+
+      text.style.left = e.clientX + 'px';
+      text.style.top = e.clientY + 'px';
+
+      document.body.appendChild(text);
+
+      setTimeout(() => {
+        text.remove();
+      }, 2000);
+    });
+
+    const music = document.getElementById('music');
+    const musicButton = document.getElementById('musicButton');
+
+    musicButton.addEventListener('click', async () => {
+
+      try {
+
+        if (music.paused) {
+          await music.play();
+          musicButton.innerText = '♫ Pausar música';
+
+        } else {
+          music.pause();
+          musicButton.innerText = '♫ Activar música';
+        }
+
+      } catch (error) {
+        musicButton.innerText = 'No se pudo reproducir';
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>

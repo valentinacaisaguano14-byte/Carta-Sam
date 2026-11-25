@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para Samygu 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Great Vibes', cursive;
+      background: linear-gradient(135deg, #bdeeff, #e6f7ff);
+      overflow: hidden;
+    }
+
+    .page {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      transition: left 1s ease-in-out;
+    }
+
+    .page.active {
+      left: 0;
+    }
+
+    h1 {
+      font-size: 4rem;
+      color: #c71585;
+      text-shadow: 2px 2px 5px #fff;
+    }
+
+    p {
+      font-size: 1.8rem;
+      color: #800040;
+      max-width: 600px;
+      margin-top: 1rem;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #ff1493;
+    }
+
+    .sunflower {
+  position: fixed;
+  top: -40px;
+  font-size: 28px;
+  animation: fall linear infinite;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page {
+  z-index: 1;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Páginas -->
+  <div class="page active" id="page1">
+    <h1>Hola mi Samy 💌</h1>
+    <p>Hoy, en este día tan especial, quiero regalarte una pequeña carta hecha con todo mi corazón, solo para ti, mi querida presi.💗</p>
+    <button onclick="nextPage()">Ver más</button>
+  </div>
+
+  <div class="page" id="page2">
+    <h1>Gracias por tu amistad 💖</h1>
+    <p>El día de hoy, en tu cumpleaños, quiero recordarte que eres una persona inteligente, capaz de lograr todo lo que te propongas. Me hace muy feliz tener la oportunidad de ser tu amiga, tu confidente y tu bully de confianza.💗</p>
+    <button onclick="nextPage()">Siguiente</button>
+  </div>
+
+  <div class="page" id="page3">
+    <h1>En las buenas y en las malas 💘</h1>
+    <p>No sé qué nos depare el destino, pero prometo que, mientras tú me lo permitas, estaré en tus buenos momentos aplaudiéndote, en los malos acompañándote con unas fresas con crema en mis manos y también en esos lugares donde estamos por obligación y no por vocación (ASO). Sin importar dónde nos encontremos, siempre juntas.💗</p>
+    <button onclick="nextPage()">Última</button>
+  </div>
+
+  <div class="page" id="page4">
+    <h1>Te adoro 💞</h1>
+    <p>Y siempre te voy a querer, más allá del tiempo y de la vida. Gracias por ser tú.</p>
+    <button onclick="restart()">Volver a leer</button>
+  </div>
+
+  <!-- Corazones flotantes -->
+  <script>
+   const totalSunflowers = 18;
+
+for (let i = 0; i < totalSunflowers; i++) {
+  const sunflower = document.createElement('div');
+  sunflower.className = 'sunflower';
+  sunflower.textContent = '🌻';
+
+  sunflower.style.left = Math.random() * 100 + 'vw';
+  sunflower.style.animationDuration = (7 + Math.random() * 7) + 's';
+  sunflower.style.animationDelay = -Math.random() * 10 + 's';
+
+  document.body.appendChild(sunflower);
+}
+
+    // Navegación entre páginas
+    let currentPage = 1;
+    function nextPage() {
+      document.getElementById(`page${currentPage}`).classList.remove('active');
+      currentPage++;
+      document.getElementById(`page${currentPage}`).classList.add('active');
+    }
+
+    function restart() {
+      document.getElementById(`page${currentPage}`).classList.remove('active');
+      currentPage = 1;
+      document.getElementById(`page${currentPage}`).classList.add('active');
+    }
+  </script>
+
+
+</body>
+</html>
